@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МПШ - 2021</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>МПШ 2021</h1>
+        {% if session['user'] %}
+            <nav>
+                <a href="">Рейтинг команд</a>
+                {% if session['admin'] %}
+                    <a href="">Для інструктора</a>
+                {% else %}
+                    <a href="">Завдання</a>
+                {% endif %}
+            </nav>
+        {% endif %}
+    </header>
+    {% block content %}{% endblock %}
+    <footer>
+        <h2>Контактна інформація</h2>
+        <a href="" title="Facebook">Фотка Facebook</a>
+        <a href="" title="Instagram">Фотка Instagram</a>
+        <p>0xx-xxx-xxxx - Хтось</p>
+        <p>0xx-xxx-xxxx - Хтось2</p>
+    </footer>
+</body>
+</html>

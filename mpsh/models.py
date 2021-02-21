@@ -53,6 +53,7 @@ class MagicLink(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(120))
     token_hash = Column(String(128))
+    visits = Column(Integer, default=0)
 
     def __init__(self, email, token):
         self.email = email
@@ -60,6 +61,7 @@ class MagicLink(Base):
 
     def get_email(self, token):
         if check_password_hash(self.token_hash, token):
+            self.visits += 1
             return self.email
 
         return None
