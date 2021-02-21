@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from mpsh.database import Base
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(Base):
@@ -9,11 +10,10 @@ class User(Base):
     name = Column(String(20), unique=True, nullable=False)
     email = Column(String(120), unique=True, nullable=False)
     admin = Column(Boolean, default=False)
-    # for what I need this??
     task_completion = relationship("TaskCompletion")
 
-    def __init__(self, name, email)
-        self.name = names
+    def __init__(self, name, email):
+        self.name = name
         self.email = email
 
     def __repr__(self):
@@ -26,7 +26,6 @@ class Task(Base):
     name = Column(String(100), nullable=False)
     points = Column(Integer, nullable=False)
     description = Column(Text)
-    # for what I need this??
     task_completion = relationship("TaskCompletion")
 
     def __init__(self, name, points, description=None):
@@ -43,3 +42,24 @@ class TaskCompletion(Base):
     id = Column(Integer, primary_key=True)
     team_id = Column(Integer, ForeignKey('users.id'))
     task_id = Column(Integer, ForeignKey('tasks.id'))
+
+    def __init__(self, team_id, task_id):
+        self.team_id = team_id
+        self.task_id = task_id
+
+
+class MagicLink(Base):
+    __tablename__ = "magic_links"
+    id = Column(Integer, primary_key=True)
+    email = Column(String(120))
+    token_hash = Column(String(128))
+
+    def __init__(self, email, token):
+        self.email = email
+        self.token_hash = generate_password_hash(token)
+
+    def get_email(self, token):
+        if check_password_hash(self.token_hash, token):
+            return self.email
+
+        return None
