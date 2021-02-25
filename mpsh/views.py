@@ -71,7 +71,10 @@ def create_magic():
         db_session.add(new_m)
         db_session.commit()
 
-        magic[user.email] = url_for('magic', email=user.email, token=token)
+        magic[user.email] = url_for('magic', 
+                                    email=user.email, 
+                                    token=token, 
+                                    _external=True)
 
     return jsonify(magic)
 

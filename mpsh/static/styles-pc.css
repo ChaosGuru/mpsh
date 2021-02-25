@@ -1,0 +1,5 @@
+@media only screen and (min-width: 769px) {
+    main > section, footer {
+        padding: 0rem 15vw;
+    }
+}

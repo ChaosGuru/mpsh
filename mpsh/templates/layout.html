@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>МПШ - 2021</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles-pc.css') }}">
 </head>
 <body>
     <header>
-        <h1>МПШ 2021</h1>
+        <a href="{{ url_for('index') }}">
+            <h1 id="title">МПШ 2021</h1>
+        </a>
         {% if session['user'] %}
-            <nav>
+            <nav style="display: none;">
                 <a href="">Рейтинг команд</a>
                 {% if session['admin'] %}
                     <a href="">Для інструктора</a>
@@ -21,13 +24,25 @@
             </nav>
         {% endif %}
     </header>
-    {% block content %}{% endblock %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
     <footer>
         <h2>Контактна інформація</h2>
-        <a href="" title="Facebook">Фотка Facebook</a>
-        <a href="" title="Instagram">Фотка Instagram</a>
-        <p>0xx-xxx-xxxx - Хтось</p>
-        <p>0xx-xxx-xxxx - Хтось2</p>
+        <div>
+            <div id="social">
+                <!-- https://www.iconsdb.com/white-icons/white-social-icons.html -->
+                <a href="" title="Facebook">
+                    <img src="{{ url_for('static', filename='images/fb_ico.png') }}" alt="Facebook">
+                </a>
+                <a href="" title="Instagram">
+                    <img src="{{ url_for('static', filename='images/insta_ico.png') }}" alt="Instagram">
+                </a>
+            </div>
+            <p>0xx-xxx-xxxx - Хтось</p>
+            <p>0xx-xxx-xxxx - Хтось2</p>
+            <p>вул. Шкільна, 2, Дрогобич</p>
+        </div>
     </footer>
 </body>
 </html>
