@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, Text, ForeignKey
 from sqlalchemy.orm import relationship
-from mpsh.database import Base
+from mpsh.database import Base, db_session
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -59,9 +59,13 @@ class MagicLink(Base):
         self.email = email
         self.token_hash = generate_password_hash(token)
 
-    def get_email(self, token):
-        if check_password_hash(self.token_hash, token):
-            self.visits += 1
-            return self.email
+    @staticmethod
+    def valid_token(email, token):
+        obj = MagicLink.query.filter_by(email=email).first()
 
-        return None
+        if obj:
+            obj.visits += 1
+            db_session.commit()
+            return True
+
+        return False
