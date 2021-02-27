@@ -12,10 +12,10 @@ def login_required(view):
     @functools.wraps(view)
     def wrapper(**kwargs):
         if session['admin']:
-            return view(*args, **kwargs)
+            return view(**kwargs)
         elif session['user']:
             # get from kwargs url and check if the same
-            return view(*args, **kwargs)
+            return view(**kwargs)
         else:
             return redirect(url_for('index'))
 
@@ -28,14 +28,9 @@ def admin_required(view):
         if not session['admin']:
             return redirect(url_for('index'))
 
-        return view(*args, **kwargs)
+        return view(**kwargs)
 
     return wrapper
-
-
-@app.route("/")
-def index():
-    return render_template('index.html')
 
 
 @app.route("/magic/<string:email>/<string:token>")
@@ -77,6 +72,12 @@ def create_magic():
                                     _external=True)
 
     return jsonify(magic)
+
+
+@app.route("/")
+def index():
+    return render_template('index.html')
+
 
 @app.route("/ranks")
 def ranks():

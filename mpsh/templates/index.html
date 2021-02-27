@@ -1,26 +1,37 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<section>
-    <h2>Молодь пам'ятає Шухавича</h2>
-    <blockquote>
-        Мудрого - не одурити. <br>
-        Чесного - не купити. <br>
-        Мужнього - не зламати. <br>
-    </blockquote>
+<section class="head-section">
+    <div id="cover">
+        <img src="{{ url_for('static', filename='images/avatar2.png') }}" alt="">
+    </div>
+    <div id="cite">
+        <!-- <h3>Молодь пам'ятає Шухавича</h3> -->
+        <blockquote>
+            Мудрого - не одурити. <br>
+            Чесного - не купити. <br>
+            Мужнього - не зламати. <br>
+        </blockquote>
+    </div>
 </section>
 <section>
-    <h3>Коротко про шухевича</h3>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis laudantium unde odio natus iusto hic aut eaque sint! Officia animi optio necessitatibus quaerat voluptatum at ducimus fuga ipsam, sapiente earum!</p>
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis nemo aliquam tempora, excepturi, voluptas quas quia dolorum fuga nostrum aspernatur fugiat nulla facere eum odio distinctio officia exercitationem minus molestiae.</p>
+    <h2>Коротко про Шухевича</h2>
+    <div class="facts">
+        <h3>Учасник Пласту</h3>
+        <p>В свої молоді роки Шухевич був учасником 1-го куреня ім. П.Сагайдачного та 7-го куреня ім. Князя Льва, пізніше 1-го куреня УСП ім. Ф.Черника, 3-го куреня УСП "Лісові Чорти" та 10-го куреня УСП "Чорноморці"</p>
+    </div>
+    <div class="facts">
+        <h3>Учасник Пласту</h3>
+        <p>В свої молоді роки Шухевич був учасником 1-го куреня ім. П.Сагайдачного та 7-го куреня ім. Князя Льва, пізніше 1-го куреня УСП ім. Ф.Черника, 3-го куреня УСП "Лісові Чорти" та 10-го куреня УСП "Чорноморці"</p>
+    </div>
 </section>
 <section id="event-details">
-    <h3>Про захід</h3>
-    <h4>Легенда заходу</h4>
+    <h2>Про захід</h2>
+    <h3>Легенда заходу</h3>
     <p>
         Молодь пам'ятає Шухевича - це щорічний захід в честь пам'яті генерала Романа Шухевича.
     </p>
-    <h4>Організатори</h4>
+    <h3>Організатори</h3>
     <div id="organisators">
         <a href="https://www.facebook.com/profile.php?id=100004328711329" target="_blank" title="Ігор Мосевич">
             <picture>
@@ -95,7 +106,7 @@
             </picture>
         </a>
     </div>
-    <h4>Місце і дата зустрічі</h4>
+    <h3>Місце і дата зустрічі</h3>
     <p>
         Цього року квест пройде <b>6 березня</b> у місті Дрогобич.
         Місце збірки - пластова домівка (всі знають де вона є, правда) )

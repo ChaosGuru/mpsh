@@ -1,5 +1,35 @@
 @media only screen and (min-width: 769px) {
     main > section, footer {
-        padding: 0rem 15vw;
+        padding: 5rem 15vw;
+    }
+    
+    body {
+        font-size: 2.8rem;
+    }
+
+    #contacts {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #contacts > div {
+        width: 50%;
+    }
+
+    #social {
+        margin-bottom: 0rem;
+    }
+
+    .head-section {
+        padding: 0rem;
+        flex-direction: row;
+    }
+
+    #cite {
+        /* align-items: flex-end; */
+    }
+
+    #cite blockquote {
+        font-size: 3rem;
     }
 }

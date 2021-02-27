@@ -10,27 +10,64 @@ html, body {
     text-align: justify;
 }
 
+body {
+    font-size: 2rem;
+}
+
 a {
     text-decoration: none;
     color: inherit;
 }
 
 header {
-    background-color: black;
+    position: relative;
+    /* display: flex;
+    justify-content: space-between; */
+    background-color: brown;
     color: white;
 }
 
 #title {
-    margin: 1rem auto 1rem 5%;
+    line-height: 5rem;
+    margin: 0rem auto 0rem 13vw;
     font-size: 3rem;
     cursor: default;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 900;
 }
 
+#menu {
+    display: none;
+    flex-direction: column;
+    line-height: 5rem;
+    font-size: 2rem;
+}
+
+#menu a {
+    padding-left: 13vw;
+}
+
+#menu a:hover {
+    background-color: rgba(255, 255, 255, 0.959);
+    color: black;
+}
+
+#menu-ico {
+    position: absolute;
+    display: block;
+    /* background-color: black; */
+    background-image: url('https://www.pngkey.com/png/full/803-8039227_lines-clipart-thick-side-menu-icon-white.png');
+    background-size: cover;
+    background-position: center;
+    height: 3rem;
+    width: 3rem;
+    margin: 1rem;
+    right: 0;
+    top: 0;
+}
+
 footer {
     text-align: center;
-    font-size: 2rem;
     padding-bottom: 2rem;
 }
 
@@ -47,16 +84,13 @@ footer p {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     margin-bottom: 3rem;
 }
 
 #social img {
     margin: 0rem 0.5rem;
     width: 4.4rem;
-}
-
-main {
-    font-size: 2rem;
 }
 
 main section {
@@ -67,6 +101,53 @@ main section {
 main section:nth-child(even) {
     background-color: white;
     color: black;
+}
+
+.head-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.head-section > div {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+#cover {
+    margin: 0rem auto;
+}
+
+#cover img {
+    display: block;
+    margin: 0rem auto;
+    max-width: 100%;
+    max-height: 70rem;
+}
+
+#cite {
+    display: flex;
+    justify-content: center;
+}
+
+#cite blockquote {
+    width: 100%;
+    text-align: left;
+    background: linear-gradient(90deg, rgba(255,255,255,0.09) 0%, rgba(0,0,0,1) 100%);
+    /* background-color: rgba(255, 255, 255, 0.068); */
+    font-size: 2.2rem;
+    padding: 1rem;
+    border-left: 0.5rem solid brown;
+}
+
+.facts {
+    padding: 1rem;
+    /* border-left: 10px solid brown; */
+}
+
+.facts h3 {
+    text-decoration: underline;
+    text-decoration-color: brown;
 }
 
 #organisators {
@@ -88,4 +169,9 @@ main section:nth-child(even) {
 #event-details iframe {
     width: 100%;
     height: 50vh;
+}
+
+#event-details h3 {
+    text-decoration: underline;
+    text-decoration-color: brown;
 }

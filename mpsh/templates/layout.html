@@ -14,14 +14,15 @@
             <h1 id="title">МПШ 2021</h1>
         </a>
         {% if session['user'] %}
-            <nav style="display: none;">
-                <a href="">Рейтинг команд</a>
+            <nav id="menu">
+                <a href="{{ url_for('ranks') }}">Рейтинг команд</a>
                 {% if session['admin'] %}
-                    <a href="">Для інструктора</a>
+                    <a href="{{ url_for('admin') }}">Для інструктора</a>
                 {% else %}
-                    <a href="">Завдання</a>
+                    <a href="{{ url_for('tasks', team=session['user']) }}">Завдання</a>
                 {% endif %}
             </nav>
+            <a id="menu-ico" href="javascript:void(0);" onclick="myMenu();"></a>
         {% endif %}
     </header>
     <main>
@@ -29,7 +30,7 @@
     </main>
     <footer>
         <h2>Контактна інформація</h2>
-        <div>
+        <div id="contacts">
             <div id="social">
                 <!-- https://www.iconsdb.com/white-icons/white-social-icons.html -->
                 <a href="" title="Facebook">
@@ -39,10 +40,13 @@
                     <img src="{{ url_for('static', filename='images/insta_ico.png') }}" alt="Instagram">
                 </a>
             </div>
-            <p>0xx-xxx-xxxx - Хтось</p>
-            <p>0xx-xxx-xxxx - Хтось2</p>
-            <p>вул. Шкільна, 2, Дрогобич</p>
+            <div>
+                <p>0xx-xxx-xxxx - Хтось</p>
+                <p>0xx-xxx-xxxx - Хтось2</p>
+                <p>вул. Шкільна, 2, Дрогобич</p>
+            </div>
         </div>
     </footer>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
