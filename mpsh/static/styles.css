@@ -21,15 +21,15 @@ a {
 
 header {
     position: relative;
-    /* display: flex;
-    justify-content: space-between; */
     background-color: brown;
     color: white;
+    padding-left: 13vw;
 }
 
 #title {
+    display: inline-block;
     line-height: 5rem;
-    margin: 0rem auto 0rem 13vw;
+    margin: 0rem;
     font-size: 3rem;
     cursor: default;
     font-family: Arial, Helvetica, sans-serif;
@@ -41,10 +41,6 @@ header {
     flex-direction: column;
     line-height: 5rem;
     font-size: 2rem;
-}
-
-#menu a {
-    padding-left: 13vw;
 }
 
 #menu a:hover {

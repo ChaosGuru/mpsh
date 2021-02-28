@@ -5,7 +5,7 @@ from flask import session, redirect, url_for, request, render_template, jsonify
 
 from mpsh import app
 from mpsh.database import db_session
-from mpsh.models import User, Task, TaskCompletion, MagicLink
+from mpsh.models import User, QuestTask, QuestPoll, QuestCompletion, MagicLink
 
 
 def login_required(view):
@@ -87,11 +87,10 @@ def ranks():
 
 
 @app.route("/tasks/<string:team>")
-@login_required
 def tasks(team):
     # take data from database
 
-    # chech if team is the same as in url
+    # check if team is the same as in url
 
     return render_template('tasks.html')
 
