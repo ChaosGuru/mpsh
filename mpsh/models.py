@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer, String, Boolean, Text, ForeignKey
 from sqlalchemy.orm import relationship
-from mpsh.database import Base, db_session
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from mpsh.database import Base, db_session
 
 
 class User(Base):
@@ -27,28 +28,24 @@ class QuestTask(Base):
     name = Column(String(100), nullable=False)
     legend = Column(Text, nullable=False)
     max_points = Column(Integer, nullable=False)
-    poll_id = Column(Integer, ForeignKey('polls.id'))
 
-    polls = relationship("QuestPoll", back_populates="tasks")
     completion = relationship("QuestCompletion")
 
-    def __init__(self, name, max_points, legend, poll_id):
+    def __init__(self, name, max_points, legend):
         self.name = name
         self.max_points = max_points
         self.legend = legend
-        self.poll_id = poll_id
+
 
     def __repr__(self):
         return "<Task %r>" % (self.name)
 
 
-class QuestPoll(Base):
+class Poll(Base):
     __tablename__ = "polls"
     id = Column(Integer, primary_key=True)
     question = Column(Text, nullable=False)
     answer = Column(String(100), nullable=False)
-
-    tasks = relationship("QuestTask", uselist=False, back_populates="polls")
 
     def __init__(self, question, answer):
         self.question = question
@@ -56,6 +53,30 @@ class QuestPoll(Base):
 
     def __repr__(self):
         return "<Poll %r>" % (self.question)
+
+
+class PollCompletion(Base):
+    __tablename__ = "answers"
+    id = Column(Integer, primary_key=True)
+    team_id = Column(Integer, ForeignKey('users.id'))
+    poll_id = Column(Integer, ForeignKey('tasks.id'))
+    correct = Column(Boolean, default=False)
+
+    def __init__(self, team_id, poll_id, correct):
+        self.team_id = team_id
+        self.poll_id = poll_id
+        self.correct = correct
+
+    @staticmethod
+    def team_score(team_id):
+        score = 0
+        objs = PollCompletion.query.filter_by(team_id=team_id).all()
+
+        for obj in objs:
+            if obj.correct:
+                score += 20
+
+        return score
 
 
 class QuestCompletion(Base):
@@ -85,20 +106,6 @@ class QuestCompletion(Base):
         return score
 
     @staticmethod
-    def solve_question(team_id, answer):
-        obj = QuestCompletion.query.filter_by(team_id=team_id).first()
-        task = QuestTask.query.filter_by(id=obj.task_id).first()
-        quest = QuestPoll.query.filter_by(id=task.poll_id).first()
-
-        if quest.answer == answer:
-            obj.solved_question = True
-            db_session.commit()
-
-            return True
-        else:
-            return False
-
-    @staticmethod
     def complete_task(team_id, task_id, points):
         obj = QuestCompletion.query.filter_by(team_id=team_id).first()
         task = QuestTask.query.filter_by(task_id=task_id).first()
@@ -111,7 +118,6 @@ class QuestCompletion(Base):
             obj.points = points
 
         db_session.commit()
-
 
 
 class MagicLink(Base):

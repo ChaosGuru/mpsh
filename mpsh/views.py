@@ -5,7 +5,8 @@ from flask import session, redirect, url_for, request, render_template, jsonify
 
 from mpsh import app
 from mpsh.database import db_session
-from mpsh.models import User, QuestTask, QuestPoll, QuestCompletion, MagicLink
+from mpsh.models import (User, QuestTask, Poll, PollCompletion, 
+                         QuestCompletion, MagicLink)
 
 
 def login_required(view):
@@ -41,6 +42,7 @@ def magic(email, token):
         if not user:
             user = User('new_user', email)
 
+        session['admin'] = False
         if user.admin:
             session['admin'] = True
         
@@ -50,23 +52,19 @@ def magic(email, token):
 
 
 @app.route("/create-magic")
+@admin_required
 def create_magic(): 
     users = User.query.all()
     magic = {}
     
     for user in users:
         token = str(uuid4())
-        old_m = MagicLink.query.filter_by(email=user.email).first()
 
-        if old_m:
-            db_session.delete(old_m)
-            db_session.commit()
-
-        new_m = MagicLink(user.email, token)
-        db_session.add(new_m)
+        m = MagicLink(user.email, token)
+        db_session.add(m)
         db_session.commit()
 
-        magic[user.email] = url_for('magic', 
+        magic[user.name] = url_for('magic', 
                                     email=user.email, 
                                     token=token, 
                                     _external=True)

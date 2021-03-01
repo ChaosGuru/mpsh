@@ -23,7 +23,6 @@ header {
     position: relative;
     background-color: brown;
     color: white;
-    padding-left: 13vw;
 }
 
 #title {
@@ -36,11 +35,19 @@ header {
     font-weight: 900;
 }
 
+#title-r {
+    margin-left: 13vw;
+}
+
 #menu {
     display: none;
     flex-direction: column;
     line-height: 5rem;
     font-size: 2rem;
+}
+
+#menu a {
+    padding-left: 13vw;
 }
 
 #menu a:hover {

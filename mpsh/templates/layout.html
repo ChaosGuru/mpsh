@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <a href="{{ url_for('index') }}">
+        <a id="title-r" href="{{ url_for('index') }}">
             <h1 id="title">МПШ 2021</h1>
         </a>
         {% if session['user'] %}
@@ -33,15 +33,15 @@
         <div id="contacts">
             <div id="social">
                 <!-- https://www.iconsdb.com/white-icons/white-social-icons.html -->
-                <a href="" title="Facebook">
+                <a href="https://www.facebook.com/events/333807781309377/?ti=ls" title="Facebook" target="_blank">
                     <img src="{{ url_for('static', filename='images/fb_ico.png') }}" alt="Facebook">
                 </a>
-                <a href="" title="Instagram">
+                <a href="" title="Instagram" target="_blank">
                     <img src="{{ url_for('static', filename='images/insta_ico.png') }}" alt="Instagram">
                 </a>
             </div>
             <div>
-                <p>0xx-xxx-xxxx - Хтось</p>
+                <p>093-449-67-42 - Комендант Мосевич Ігор</p>
                 <p>0xx-xxx-xxxx - Хтось2</p>
                 <p>вул. Шкільна, 2, Дрогобич</p>
             </div>
