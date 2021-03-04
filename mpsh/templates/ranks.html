@@ -1,5 +1,24 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1>Hello from ranks.html</h1>
+<section>
+    <h1>Рейтинг команд</h1>
+    <div id="leaderboard">
+    {% for l in leaderboard %}
+        <a class="team-link" href="{{ url_for('tasks', team_id=l[1][2]) }}">
+            <div class="team-line">
+                <div class="team-rank">
+                    {{ l[0]+1 }}
+                </div>
+                <div class="team-name">
+                    {{ l[1][1] }}
+                </div>
+                <div class="team-score">
+                    {{ l[1][0] }}
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+    </div>
+</section>
 {% endblock %}

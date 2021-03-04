@@ -19,7 +19,7 @@
                 {% if session['admin'] %}
                     <a href="{{ url_for('admin') }}">Для інструктора</a>
                 {% else %}
-                    <a href="{{ url_for('tasks', team=session['user']) }}">Завдання</a>
+                    <a href="{{ url_for('tasks', team_id=session['user']) }}">Завдання</a>
                 {% endif %}
             </nav>
             <a id="menu-ico" href="javascript:void(0);" onclick="myMenu();"></a>
@@ -36,13 +36,13 @@
                 <a href="https://www.facebook.com/events/333807781309377/?ti=ls" title="Facebook" target="_blank">
                     <img src="{{ url_for('static', filename='images/fb_ico.png') }}" alt="Facebook">
                 </a>
-                <a href="" title="Instagram" target="_blank">
+                <!-- <a href="" title="Instagram" target="_blank">
                     <img src="{{ url_for('static', filename='images/insta_ico.png') }}" alt="Instagram">
-                </a>
+                </a> -->
             </div>
             <div>
                 <p>093-449-67-42 - Комендант Мосевич Ігор</p>
-                <p>0xx-xxx-xxxx - Хтось2</p>
+                <p>099-409-61-42 - Писар Балака Марина</p>
                 <p>вул. Шкільна, 2, Дрогобич</p>
             </div>
         </div>

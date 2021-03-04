@@ -12,13 +12,14 @@ from mpsh.models import (User, QuestTask, Poll, PollCompletion,
 def login_required(view):
     @functools.wraps(view)
     def wrapper(**kwargs):
+        msg = "учасник команди"
         if session['admin']:
             return view(**kwargs)
         elif session['user']:
             # get from kwargs url and check if the same
             return view(**kwargs)
         else:
-            return redirect(url_for('index'))
+            return render_template('non-team.html', msg=msg)
 
     return wrapper
 
@@ -26,8 +27,9 @@ def login_required(view):
 def admin_required(view):
     @functools.wraps(view)
     def wrapper(**kwargs):
+        msg = "інструктор"
         if not session['admin']:
-            return redirect(url_for('index'))
+            return render_template('non-team.html', msg=msg)
 
         return view(**kwargs)
 
@@ -79,23 +81,69 @@ def index():
 
 @app.route("/ranks")
 def ranks():
-    # take data from database
+    get_score = lambda team_id: QuestCompletion.team_score(team_id) \
+        + PollCompletion.team_score(team_id)
 
-    return render_template('ranks.html')
+    teams = User.query.filter_by(admin=False)
+    scores = [(get_score(t.id), t.name, t.id) for t in teams]
 
+    leaderboard = tuple(enumerate(sorted(scores, key=lambda x: x[0], reverse=True)))
 
-@app.route("/tasks/<string:team>")
-def tasks(team):
-    # take data from database
-
-    # check if team is the same as in url
-
-    return render_template('tasks.html')
+    return render_template('ranks.html', leaderboard=leaderboard)
 
 
-@app.route("/admin")
+@app.route("/tasks/<int:team_id>")
+@login_required
+def tasks(team_id):
+    tasks = QuestTask.query.all()
+    complete = QuestCompletion.query.filter_by(team_id=team_id).all()
+    complete_dict = {d.task_id:d for d in complete}
+    
+    tasks_num = len(tasks)
+    ctasks_num = 0
+
+    polls = Poll.query.all()
+    cpolls = PollCompletion.query.filter_by(team_id=team_id).all()
+    polls_num = len(polls)
+    cpolls_num = len(cpolls)
+
+    quest_tasks = []
+    for task in tasks:
+        qt = {}
+        qt["name"] = task.name
+        qt["max_points"] = task.max_points
+        qt["legend"] = task.legend
+
+        if task.id in complete_dict.keys():
+            qt["points"] = complete_dict[task.id].points
+            ctasks_num += 1
+        else:
+            qt["points"] = 0
+
+        quest_tasks.append(qt)
+
+    return render_template('tasks.html', 
+                           tasks=quest_tasks, 
+                           tasks_num=tasks_num, 
+                           ctasks_num=ctasks_num,
+                           polls_num=polls_num,
+                           cpolls_num=cpolls_num)
+
+
+@app.route("/admin", methods=["GET", "POST"])
 @admin_required
 def admin():
+    if request.method == "POST":
+        team_id = request.form["teams"]
+        task_id = request.form["tasks"]
+        points = int(request.form["points"])
 
+        QuestCompletion.complete_task(team_id, task_id, points)
 
-    return render_template('admin.html')
+        return redirect(url_for('index'))
+
+    teams = User.query.filter_by(admin=False)
+    tasks = QuestTask.query.all()
+    # максимальна к-ть балів на завданні
+
+    return render_template('admin.html', teams=teams, tasks=tasks)

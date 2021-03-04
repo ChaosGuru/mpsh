@@ -1,5 +1,38 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1>Hello from task.html</h1>
+<section id="quest-rules">
+    <h1>Завдання</h1>
+    <p>На даній сторінці ви можете бачити завдання і іх статус, а також скільки балів за них ви отримали.</p>
+    <p><span style="color: red;">Червоне</span> - не виконане, <span style="color: limegreen;">зелене</span> - виконане. 0/100 означає, що ви отримали 0 балів за точку з 100 можливих.</p>
+    <p>В квесті є два типи точок: 
+        <ol>
+            <li>Інструкторькі, де вам необхідно пройти випробування, а також отримати, або знайти питання і дати на нього відповідь;</li>
+            <li> QR-коди, які перенаправлять вас на сторінку з запитанням.</li>
+        </ol>
+    </p>
+    <p><b>Ваше завдання - пройти всі випробування.</b></p>
+    <p>Якщо виникли питання - дзвоніть за номером вказаним знизу.</p>
+</section>
+<section>
+    <div>
+        <h3>Пройдено випробувань {{ ctasks_num }}/{{ tasks_num }}</h3>
+        <h3>Знайдено питань {{ cpolls_num }}/{{ polls_num }}</h3>
+    </div>
+    <div id="tasks">
+        {% for task in tasks %}
+            {% if task['points'] == 0 %}
+                <div class="task">
+            {% else %}
+                <div class="task" data-complete>
+            {% endif %}
+                    <p class="task-name">{{ task['name'] }}</p>
+                    <p class="task-legend">{{ task['legend'] }}</p>
+                    <div class="task-points">
+                        <b>{{ task['points'] }}/{{ task['max_points'] }}</b>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

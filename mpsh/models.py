@@ -85,7 +85,6 @@ class QuestCompletion(Base):
     team_id = Column(Integer, ForeignKey('users.id'))
     task_id = Column(Integer, ForeignKey('tasks.id'))
     points = Column(Integer, nullable=False)
-    solved_question = Column(Boolean, default=False)
 
     def __init__(self, team_id, task_id, points):
         self.team_id = team_id
@@ -100,15 +99,12 @@ class QuestCompletion(Base):
         for obj in objs:
             score += obj.points
 
-            if obj.solved_question:
-                score += 20
-
         return score
 
     @staticmethod
     def complete_task(team_id, task_id, points):
-        obj = QuestCompletion.query.filter_by(team_id=team_id).first()
-        task = QuestTask.query.filter_by(task_id=task_id).first()
+        obj = QuestCompletion.query.filter_by(team_id=team_id,task_id=task_id).first()
+        task = QuestTask.query.filter_by(id=task_id).first()
         points = min(points, task.max_points)
 
         if not obj:

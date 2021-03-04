@@ -148,7 +148,7 @@ main section:nth-child(even) {
     /* border-left: 10px solid brown; */
 }
 
-.facts h3 {
+h3 {
     text-decoration: underline;
     text-decoration-color: brown;
 }
@@ -177,4 +177,80 @@ main section:nth-child(even) {
 #event-details h3 {
     text-decoration: underline;
     text-decoration-color: brown;
+}
+
+.team-link:nth-child(1) {
+    color: gold;
+}
+
+.team-link:nth-child(2) {
+    color: silver;
+}
+
+.team-link:nth-child(3) {
+    color: burlywood;
+}
+
+.team-line {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 4px solid brown;
+}
+
+.team-rank {
+    padding: 1rem;
+}
+
+.team-name {
+    padding: 1rem 0rem;
+    flex-grow: 1;
+}
+
+.team-score {
+    padding: 1rem;
+}
+
+/* temp? */
+#quest-rules {
+    min-height: 50vh;
+}
+
+#tasks {
+    display: flex;
+    flex-direction: column;
+}
+
+.task {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    border-left: 1rem solid;
+    border-color: maroon;
+    background-color: rgba(128, 0, 0, 0.3);
+    /* color: white; */
+}
+
+.task[data-complete=""] {
+    border-color: limegreen;
+    background-color: rgba(50, 205, 50, 0.3);
+}
+
+#submit-points {
+    display: block;
+    width: 80%;
+    height: 5rem;
+    margin: 5rem auto;
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    background-color: brown;
+    border: none;
+}
+
+#type-points, #task-select, #team-select {
+    display: block;
+    width: 80%;
+    height: 3rem;
+    font-size: 2rem;
+    background-color: whitesmoke;
 }

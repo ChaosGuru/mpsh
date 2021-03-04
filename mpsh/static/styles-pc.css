@@ -2,6 +2,10 @@
     main > section, footer {
         padding: 5rem 15vw;
     }
+
+    main section {
+        min-height: 50vh;
+    }
     
     body {
         font-size: 2.8rem;

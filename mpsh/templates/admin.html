@@ -1,5 +1,31 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1>Hello from admin.html</h1>
+<section>
+    <h1>Зарахування точки</h1>
+    <form id="task-form" method="post">
+        <label for="teams">Вибери команду:</label>
+        <br>
+        <select name="teams" id="team-select">
+            {% for t in teams %}
+            <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="tasks">Вибери завдання:</label>
+        <br>
+        <select name="tasks" id="task-select" onchange="setMaxPoints();">
+            <option value="{{ tasks[0].id }}" data-maxpoints="{{ tasks[0].max_points }}" selected>{{ tasks[0].name }}</option>
+            {% for t in tasks[1:] %}
+            <option value="{{ t.id }}" data-maxpoints="{{ t.max_points }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="points">Максимальна к-ть балів <b><span id="max-points">{{ tasks[0].max_points }}</span></b></label>
+        <br>
+        <input id="type-points" type="number" name="points" min="1" max="{{ tasks[0].max_points }}" value="1" required>
+        <br>
+        <input id="submit-points" type="submit" value="Зарахувати точку">
+    </form>
+</section>
 {% endblock %}
