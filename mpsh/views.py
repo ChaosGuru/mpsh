@@ -13,9 +13,9 @@ def login_required(view):
     @functools.wraps(view)
     def wrapper(**kwargs):
         msg = "учасник команди"
-        if session['admin']:
+        if session.get('admin', False):
             return view(**kwargs)
-        elif session['user']:
+        elif session.get('user', False):
             # get from kwargs url and check if the same
             return view(**kwargs)
         else:
@@ -28,7 +28,7 @@ def admin_required(view):
     @functools.wraps(view)
     def wrapper(**kwargs):
         msg = "інструктор"
-        if not session['admin']:
+        if not session.get('admin', False):
             return render_template('non-team.html', msg=msg)
 
         return view(**kwargs)
