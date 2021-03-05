@@ -6,7 +6,7 @@
     <form id="task-form" method="post">
         <label for="teams">Вибери команду:</label>
         <br>
-        <select name="teams" id="team-select">
+        <select name="teams" id="team-select" class="type-input" >
             {% for t in teams %}
             <option value="{{ t.id }}">{{ t.name }}</option>
             {% endfor %}
@@ -14,7 +14,7 @@
         <br>
         <label for="tasks">Вибери завдання:</label>
         <br>
-        <select name="tasks" id="task-select" onchange="setMaxPoints();">
+        <select name="tasks" id="task-select" class="type-input" onchange="setMaxPoints();">
             <option value="{{ tasks[0].id }}" data-maxpoints="{{ tasks[0].max_points }}" selected>{{ tasks[0].name }}</option>
             {% for t in tasks[1:] %}
             <option value="{{ t.id }}" data-maxpoints="{{ t.max_points }}">{{ t.name }}</option>
@@ -23,9 +23,27 @@
         <br>
         <label for="points">Максимальна к-ть балів <b><span id="max-points">{{ tasks[0].max_points }}</span></b></label>
         <br>
-        <input id="type-points" type="number" name="points" min="1" max="{{ tasks[0].max_points }}" value="1" required>
+        <input id="type-points" class="type-input" type="number" name="points" min="1" max="{{ tasks[0].max_points }}" value="1" required>
         <br>
-        <input id="submit-points" type="submit" value="Зарахувати точку">
+        <input class="submit-butt" type="submit" value="Зарахувати точку">
     </form>
+</section>
+<section>
+    <h1>Відповіді на питання</h1>
+    <div id="survey">
+        {% for t in teams %}
+            <h3>Команда {{ t.name }}</h3>
+            <div class="poll-answers">
+                {% for a in survey[t.name] %}
+                    {% if a[2]!="Немає відповіді" %}
+                        <div class="poll-answ">
+                            <p><b>Питання:</b>  {{a[0] }} ({{ a[1] }})</p>
+                            <p><b>Відповідь:</b> {{ a[2] }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 </section>
 {% endblock %}

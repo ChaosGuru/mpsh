@@ -1,7 +1,8 @@
 import functools
 from uuid import uuid4
+from difflib import SequenceMatcher
 
-from flask import session, redirect, url_for, request, render_template, jsonify
+from flask import session, redirect, url_for, request, render_template, jsonify, flash
 
 from mpsh import app
 from mpsh.database import db_session
@@ -81,8 +82,7 @@ def index():
 
 @app.route("/ranks")
 def ranks():
-    get_score = lambda team_id: QuestCompletion.team_score(team_id) \
-        + PollCompletion.team_score(team_id)
+    get_score = lambda team_id: QuestCompletion.team_score(team_id)
 
     teams = User.query.filter_by(admin=False)
     scores = [(get_score(t.id), t.name, t.id) for t in teams]
@@ -140,10 +140,62 @@ def admin():
 
         QuestCompletion.complete_task(team_id, task_id, points)
 
-        return redirect(url_for('index'))
+        return redirect(url_for('admin'))
 
     teams = User.query.filter_by(admin=False)
     tasks = QuestTask.query.all()
-    # максимальна к-ть балів на завданні
+    polls = Poll.query.all()
+    cpolls = PollCompletion.query.all()
+    survey = {}
 
-    return render_template('admin.html', teams=teams, tasks=tasks)
+    for team in teams:
+        survey[team.name] = []
+        for poll in polls:
+            answ = [poll.question, poll.answer, "Немає відповіді"]
+            for cpoll in cpolls:
+                if poll.id == cpoll.poll_id and team.id == cpoll.team_id:
+                    answ[2] = cpoll.answer
+                    break
+
+            survey[team.name].append(answ)
+
+    return render_template('admin.html', 
+                           teams=teams, 
+                           tasks=tasks, 
+                           survey=survey)
+
+
+@app.route("/poll/<int:poll_num>", methods=["GET", "POST"])
+@login_required
+def poll(poll_num):
+    poll_id = poll_num // 71
+    poll = Poll.query.filter_by(id=poll_id).first()
+
+    if request.method == "POST":
+        team_id = session['user']
+        answer = request.form["answer"]
+        
+        if PollCompletion.query.filter_by(team_id=team_id, poll_id=poll_id).first():
+            flash("Ви уже відповідали на це питання.")
+            return render_template('poll.html', question=poll.question)
+
+        p = PollCompletion(team_id, poll_id, answer)
+        db_session.add(p)
+        db_session.commit()
+
+        flash("Ваша відповідь надіслана. Відповідь на це питання: %s." % (poll.answer))
+    
+    return render_template('poll.html', question=poll.question)
+
+
+@app.route("/poll/links")
+@admin_required
+def poll_links():
+    polls = Poll.query.all()
+    links = []
+
+    for poll in polls:
+        l = url_for('poll', poll_num=poll.id * 71, _external=True)
+        links.append(l)
+
+    return jsonify(links)

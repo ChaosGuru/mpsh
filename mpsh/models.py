@@ -60,23 +60,23 @@ class PollCompletion(Base):
     id = Column(Integer, primary_key=True)
     team_id = Column(Integer, ForeignKey('users.id'))
     poll_id = Column(Integer, ForeignKey('tasks.id'))
-    correct = Column(Boolean, default=False)
+    answer = Column(Text, nullable=False)
 
-    def __init__(self, team_id, poll_id, correct):
+    def __init__(self, team_id, poll_id, answer):
         self.team_id = team_id
         self.poll_id = poll_id
-        self.correct = correct
+        self.answer = answer
 
-    @staticmethod
-    def team_score(team_id):
-        score = 0
-        objs = PollCompletion.query.filter_by(team_id=team_id).all()
+    # @staticmethod
+    # def team_score(team_id):
+    #     score = 0
+    #     objs = PollCompletion.query.filter_by(team_id=team_id).all()
 
-        for obj in objs:
-            if obj.correct:
-                score += 20
+    #     for obj in objs:
+    #         if obj.correct:
+    #             score += 20
 
-        return score
+    #     return score
 
 
 class QuestCompletion(Base):

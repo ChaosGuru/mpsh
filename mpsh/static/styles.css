@@ -235,7 +235,7 @@ h3 {
     background-color: rgba(50, 205, 50, 0.3);
 }
 
-#submit-points {
+.submit-butt {
     display: block;
     width: 80%;
     height: 5rem;
@@ -247,10 +247,21 @@ h3 {
     border: none;
 }
 
-#type-points, #task-select, #team-select {
+.type-input {
     display: block;
     width: 80%;
     height: 3rem;
     font-size: 2rem;
     background-color: whitesmoke;
+}
+
+.poll-answ {
+    /* border: 1px solid maroon; */
+    margin: 1rem 0rem;
+    padding: 1rem;
+    text-align: left;
+}
+
+.poll-answ p {
+    margin: 0;
 }
