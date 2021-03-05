@@ -23,7 +23,7 @@
         <br>
         <label for="points">Максимальна к-ть балів <b><span id="max-points">{{ tasks[0].max_points }}</span></b></label>
         <br>
-        <input id="type-points" class="type-input" type="number" name="points" min="1" max="{{ tasks[0].max_points }}" value="1" required>
+        <input id="type-points" class="type-input" type="number" name="points" min="0" max="{{ tasks[0].max_points }}" value="1" required>
         <br>
         <input class="submit-butt" type="submit" value="Зарахувати точку">
     </form>

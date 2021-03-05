@@ -98,6 +98,7 @@ def tasks(team_id):
     tasks = QuestTask.query.all()
     complete = QuestCompletion.query.filter_by(team_id=team_id).all()
     complete_dict = {d.task_id:d for d in complete}
+    team_name = User.query.filter_by(id=team_id).first().name
     
     tasks_num = len(tasks)
     ctasks_num = 0
@@ -127,7 +128,8 @@ def tasks(team_id):
                            tasks_num=tasks_num, 
                            ctasks_num=ctasks_num,
                            polls_num=polls_num,
-                           cpolls_num=cpolls_num)
+                           cpolls_num=cpolls_num,
+                           team_name=team_name)
 
 
 @app.route("/admin", methods=["GET", "POST"])
