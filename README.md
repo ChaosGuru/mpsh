@@ -24,5 +24,3 @@ Here is mistakes which I have made.
 2. Create automatic database data inserting in case you need to change database scheme.
 3. Read documentation. I often read documentation if I do not know how to do some things but if you know does not mean you know correctly. (Hosting sqlite on heroku (facepalm))
 4. Periodically show your progress to your client. It keeps you and your client motivated.
-
-*You can see secret key in commit. I know it is very bad practice. But on heroku I have another key.
