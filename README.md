@@ -1,5 +1,7 @@
 ## This site was developed for plast (Ukrainian scout organization) event.
 
+[Web site](http://mpsh.herokuapp.com)
+
 Event was held in format of team competition.
 The site should have had the following functions: 
 1. display ranking of each team in real time
